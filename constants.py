@@ -1,3 +1,5 @@
+PATTERN_RED =[2, 1, 2, 2, 1, 2, 2]
+
 SHARP_FLAT_EQUALITY_LIST = {
     "C": 0,
     "C#": 1,
