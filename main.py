@@ -1,5 +1,5 @@
 from constants import *
-from scale_maker import generate_twelve_outputs
+from fractal.scale_maker import generate_twelve_outputs
 
 
 if __name__ == "__main__":
