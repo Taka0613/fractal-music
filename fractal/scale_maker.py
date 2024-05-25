@@ -77,7 +77,3 @@ def generate_twelve_outputs(UNDERLYING_STRUTURE: list[list], DYNAMIC_CIRCULAR: d
             current_note_index += 1
         
     return result
-
-
-        
-
