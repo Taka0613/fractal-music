@@ -1,4 +1,4 @@
-from constants import NOTE_INDEXES, SHARP_FLAT_EQUALITY_LIST
+from constants import NOTE_INDEXES, SHARP_FLAT_EQUALITY_LIST, DYNAMIC_CIRCULAR_INPUT, PATTERN_TWO_DOTS, PATTERN_TRIANGLE, PATTERN_SQUARE, PATTERN_PLUS, PATTERN_KEY, PATTERN_UP_ARROW, PATTERN_DOWN_ARROW, PATTERN_STAR_I,PATTERN_STAR_II, PATTERN_STAR_III, PATTERN_STAR_IV, PATTERN_STAR_V, UNDERLYING_STRUTURE
 
 
 def is_valid_input(interval_pattern, starting_note):
@@ -57,6 +57,25 @@ def generate_scale(interval_pattern, starting_note) -> list:
                             result[j] = note
 
     return result
+
+def generate_twelve_outputs(UNDERLYING_STRUTURE, DYNAMIC_CIRCULAR_INPUT, starting_note):
+    if is_valid_input(PATTERN_TWO_DOTS, starting_note):
+        current_index = 0
+        result = []
+        for _ in range(12):
+            if DYNAMIC_CIRCULAR_INPUT != starting_note:
+                current_index += 1
+            else:
+                break
+        for i in range(12):
+            if current_index > 11:
+                current_index -= 12
+            result.append(generate_scale(UNDERLYING_STRUTURE[i], DYNAMIC_CIRCULAR_INPUT[current_index]))
+            current_index += 1
+        
+    return result
+            
+
 
         
 
