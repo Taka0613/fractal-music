@@ -1,7 +1,6 @@
-from constants import NOTE_INDEXES, SHARP_FLAT_EQUALITY_LIST, DYNAMIC_CIRCULAR_INPUT, PATTERN_TWO_DOTS, PATTERN_TRIANGLE, PATTERN_SQUARE, PATTERN_PLUS, PATTERN_KEY, PATTERN_UP_ARROW, PATTERN_DOWN_ARROW, PATTERN_STAR_I,PATTERN_STAR_II, PATTERN_STAR_III, PATTERN_STAR_IV, PATTERN_STAR_V, UNDERLYING_STRUTURE
+from constants import *
 
-
-def is_valid_input(interval_pattern, starting_note):
+def is_valid_input(interval_pattern, starting_note) -> bool:
     """Check the pattern is a list of integers, no smaller than 5 digits
     and each digit must be positive and no bigger than 4
     
@@ -39,42 +38,45 @@ def generate_scale(interval_pattern, starting_note) -> list:
             if note > maximum_index:
                 maximum_index = note
         
-        for i in interval_pattern:
-            current_index += i
+        for index in interval_pattern:
+            current_index += index
             if current_index > maximum_index:
                 current_index -= (maximum_index + 1)
             result.append(NOTE_INDEXES[current_index])
         
         # replace same position
-        for i in range(len(result)):
-            for j in range(len(result)-1):
-                if result[i] != result[j] and result[i][0] == result[j][0]:
-                    for note in SHARP_FLAT_EQUALITY_LIST:
-                        if note == result[j]:
-                            duplicate_index = SHARP_FLAT_EQUALITY_LIST[note]
-                    for note in SHARP_FLAT_EQUALITY_LIST:
-                        if duplicate_index == SHARP_FLAT_EQUALITY_LIST[note] and  note != result[j]:
-                            result[j] = note
+        for index in range(len(result)):
+            for pos in range(len(result)-1):
+                if result[index] != result[pos] and result[index][0] == result[pos][0]:
+                    for note in SHARP_FLAT_EQUALITY:
+                        if note == result[pos]:
+                            duplicate_index = SHARP_FLAT_EQUALITY[note]
+                    for note in SHARP_FLAT_EQUALITY:
+                        if duplicate_index == SHARP_FLAT_EQUALITY[note] and  note != result[pos]:
+                            result[pos] = note
 
     return result
 
-def generate_twelve_outputs(UNDERLYING_STRUTURE, DYNAMIC_CIRCULAR_INPUT, starting_note):
+def generate_twelve_outputs(UNDERLYING_STRUTURE: list[list], DYNAMIC_CIRCULAR: dict, starting_note: str) -> list:
+    """
+        Generate a scale for each of the twelve notes of the dynamic circular input.
+        Args: needs a starting note out of the twelve given in str
+    """
     if is_valid_input(PATTERN_TWO_DOTS, starting_note):
-        current_index = 0
+        current_note_index = 0
         result = []
         for _ in range(12):
-            if DYNAMIC_CIRCULAR_INPUT != starting_note:
-                current_index += 1
+            if DYNAMIC_CIRCULAR != starting_note:
+                current_note_index += 1
             else:
                 break
-        for i in range(12):
-            if current_index > 11:
-                current_index -= 12
-            result.append(generate_scale(UNDERLYING_STRUTURE[i], DYNAMIC_CIRCULAR_INPUT[current_index]))
-            current_index += 1
+        for pattern in range(12):
+            if current_note_index > 11:
+                current_note_index -= 12
+            result.append(generate_scale(UNDERLYING_STRUTURE[pattern], DYNAMIC_CIRCULAR[current_note_index]))
+            current_note_index += 1
         
     return result
-            
 
 
         
