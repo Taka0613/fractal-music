@@ -1,6 +1,20 @@
-PATTERN_RED =[2, 1, 2, 2, 1, 2, 2]
+TWO_DOTS =[2, 1, 2, 2, 1, 2, 2]
+TRIANGLE =[1, 2, 2, 1, 2, 2, 2]
+SQUARE =[2, 2, 1, 2, 2, 2, 1]
+PLUS =[2, 1, 2, 2, 2, 1, 2]
+KEY =[1, 2, 2, 2, 1, 2, 2]
+UP_ARROW =[2, 2, 2, 1, 2, 2, 1]
+DOWN_ARROW =[2, 2, 1, 2, 2, 1, 2]
+STAR_I = [2, 3, 2, 2, 3]
+STAR_II = [3, 2, 2, 3, 2]
+STAR_III = [2, 2, 3, 2, 3]
+STAR_IV = [2, 3, 2, 3, 2]
+STAR_V = [3, 2, 3, 2, 2]
 
-SHARP_FLAT_EQUALITY_LIST = {
+UNDERLYING_STRUTURE = [TWO_DOTS, PLUS, DOWN_ARROW, SQUARE, UP_ARROW, STAR_V, STAR_II, STAR_IV, STAR_I, STAR_III, TRIANGLE, KEY]
+DYNAMIC_CIRCULAR =  ['A', 'D', 'G', 'C', 'F', 'A#', 'D#', 'G#', 'C#', 'F#', 'B', 'E']
+
+SHARP_FLAT_EQUALITY = {
     "C": 0,
     "C#": 1,
     "Db": 1,
