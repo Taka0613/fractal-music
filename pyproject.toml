@@ -2,9 +2,6 @@
 package-mode = false
 readme = "README.md"
 
-[make.up-block]
-stuff = 3
-
 [tool.poetry.dependencies]
 python = "3.12.3"
 
@@ -12,7 +9,7 @@ python = "3.12.3"
 name = "Scale Maker"
 
 authors = [
-  {name = "Takaya", email = "takaya@use.com"}
+  {name = "Takaya", email = "takaya@uni.minerva.edu"}
 ]
 description = "Lovely Fractal!"
 version=1.0
