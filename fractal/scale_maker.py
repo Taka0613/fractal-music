@@ -18,7 +18,7 @@ def is_valid_input(interval_pattern: list[int], starting_note: str) -> bool:
     
     return result
 
-def generate_scale(interval_pattern, starting_note) -> list:
+def generate_scale(interval_pattern: list[int], starting_note: str) -> list:
     """
     Given an interval pattern and a starting note, generate the scale.
     1 = half step, 2 = whole step, 3 = one and a half steps, etc.
