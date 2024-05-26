@@ -57,16 +57,16 @@ def generate_scale(interval_pattern, starting_note) -> list:
 
     return result
 
-def generate_twelve_outputs(UNDERLYING_STRUTURE: list[list], DYNAMIC_CIRCULAR: dict, starting_note: str) -> list:
+def generate_twelve_outputs(UNDERLYING_STRUTURE: list[list], DYNAMIC_CIRCULAR: list, starting_note: str) -> list:
     """
         Generate a scale for each of the twelve notes of the dynamic circular input.
         Args: needs a starting note out of the twelve given in str
     """
-    if is_valid_input(PATTERN_TWO_DOTS, starting_note):
+    if is_valid_input(TWO_DOTS, starting_note):
         current_note_index = 0
         result = []
-        for _ in range(12):
-            if DYNAMIC_CIRCULAR != starting_note:
+        for note in DYNAMIC_CIRCULAR:
+            if note != starting_note:
                 current_note_index += 1
             else:
                 break
@@ -77,3 +77,4 @@ def generate_twelve_outputs(UNDERLYING_STRUTURE: list[list], DYNAMIC_CIRCULAR: d
             current_note_index += 1
         
     return result
+
