@@ -1,6 +1,6 @@
 from constants import *
 
-def is_valid_input(interval_pattern, starting_note) -> bool:
+def is_valid_input(interval_pattern: list[int], starting_note: str) -> bool:
     """Check the pattern is a list of integers, no smaller than 5 digits
     and each digit must be positive and no bigger than 4
     
