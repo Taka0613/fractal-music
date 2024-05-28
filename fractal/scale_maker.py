@@ -28,15 +28,20 @@ def generate_scale(interval_pattern: list[int], starting_note: str) -> list:
     result = []
 
     if is_valid_input(interval_pattern, starting_note):
+        #deal with exceptions first
+        if starting_note == 'C':
+            result.append('C')
+            current_index = 0
+        elif starting_note == 'F':
+            current_index = 5
+            result.append('F')
         for note in NOTE_INDEXES:
             if NOTE_INDEXES[note] == starting_note:
                 current_index = note
                 result.append(starting_note)
 
-            # find the maximum index to find the period of circulation
-            maximum_index = 0
-            if note > maximum_index:
-                maximum_index = note
+            # The period of circulation is always 12
+            maximum_index = 11
         
         for index in interval_pattern:
             current_index += index
@@ -44,16 +49,42 @@ def generate_scale(interval_pattern: list[int], starting_note: str) -> list:
                 current_index -= (maximum_index + 1)
             result.append(NOTE_INDEXES[current_index])
         
-        # replace same position
+        new_result = []
         for index in range(len(result)):
-            for pos in range(len(result)-1):
-                if result[index] != result[pos] and result[index][0] == result[pos][0]:
+            # when a note has no equivalent note
+            if result[index] == 'D' or result[index] == 'G' or result[index] == 'A':
+                fixed_index = index
+                new_result = result[fixed_index:] + result[:fixed_index]
+                break
+
+        if new_result != []:
+            for pos in range(len(new_result)-1):
+                # when we compare the first and the last note in original result
+                # they should be exactly same note
+                if pos == 7-index and len(new_result) == 8:
+                    new_result[pos+1] = new_result[pos]
+                elif new_result[pos][0] == new_result[pos+1][0] or (new_result[pos] == "Cb" and new_result[pos+1] == "B#"):
                     for note in SHARP_FLAT_EQUALITY:
-                        if note == result[pos]:
+                        if note == new_result[pos+1]:
                             duplicate_index = SHARP_FLAT_EQUALITY[note]
                     for note in SHARP_FLAT_EQUALITY:
-                        if duplicate_index == SHARP_FLAT_EQUALITY[note] and  note != result[pos]:
-                            result[pos] = note
+                        if duplicate_index == SHARP_FLAT_EQUALITY[note] and  note != new_result[pos+1]:
+                            new_result[pos+1] = note
+        # restore a original result from new result
+            if len(interval_pattern) == 7:
+                result = new_result[8-fixed_index:] + new_result[:8-fixed_index]
+            elif len(interval_pattern) == 5:
+                result = new_result[6-fixed_index:] + new_result[:6-fixed_index]
+        else:
+            for pos in range(len(result)-1):
+                if result[pos][0] == result[pos+1][0]  or (result[pos] == "Cb" and result[pos+1] == "B#"):
+                    for note1 in SHARP_FLAT_EQUALITY:
+                        current_note_index = SHARP_FLAT_EQUALITY[result[pos + 1]]
+                    for note, index in SHARP_FLAT_EQUALITY.items():
+                        if index == current_note_index and note != result[pos + 1]:
+                            result[pos + 1] = note
+                            break
+            result[-1] = result[0]
 
     return result
 
@@ -63,6 +94,8 @@ def generate_twelve_outputs(UNDERLYING_STRUTURE: list[list], DYNAMIC_CIRCULAR: l
         Args: needs a starting note out of the twelve given in str
     """
     if is_valid_input(TWO_DOTS, starting_note):
+        if not starting_note in DYNAMIC_CIRCULAR:
+            raise Exception("Starting note must come from a list DYNAMIC_CIRCULAR")
         current_note_index = 0
         result = []
         for note in DYNAMIC_CIRCULAR:

@@ -15,6 +15,7 @@ UNDERLYING_STRUTURE = [TWO_DOTS, PLUS, DOWN_ARROW, SQUARE, UP_ARROW, STAR_V, STA
 DYNAMIC_CIRCULAR =  ['A', 'D', 'G', 'C', 'F', 'A#', 'D#', 'G#', 'C#', 'F#', 'B', 'E']
 
 SHARP_FLAT_EQUALITY = {
+    "B#": 0,
     "C": 0,
     "C#": 1,
     "Db": 1,
@@ -34,17 +35,16 @@ SHARP_FLAT_EQUALITY = {
     "A#": 10,
     "Bb": 10,
     "B": 11,
-    "Cb": 11,
-    "B#": 0
+    "Cb": 11
     }
 
 NOTE_INDEXES = {
-    0: "C",
+    0: "B#",
     1: "C#",
     2: "D",
     3: "D#",
     4: "E",
-    5: "F",
+    5: "E#",
     6: "F#",
     7: "G",
     8: "G#",
