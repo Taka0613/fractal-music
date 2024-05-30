@@ -59,7 +59,7 @@ def test_generate_valid_sequence_from_C():
     for scale in range(12):
         assert EXPECTED_FROM_C[scale] == result2[scale]
 
-def test_generate_valid_sequence_from_Esharp():
+def test_generate_invalid_sequence_from_Esharp():
     with pytest.raises(Exception):
         generate_scale(WRONG_PATTERN, STARTING_LETTER3)
 

@@ -10,16 +10,18 @@ def is_valid_input(interval_pattern: list[int], starting_note: str) -> bool:
 
     result = True
 
-    if not isinstance(interval_pattern, list) or len(interval_pattern) <= 5:
-        if not all([isinstance(note, int) for note in interval_pattern]):
-            raise Exception("Interval pattern must be a list of integers")  
+    if not isinstance(interval_pattern, list) or len(interval_pattern) < 5 or len(interval_pattern) > 7:
+        raise Exception("Interval pattern must be a list of 5 to 7 elements")
+
+    elif not all([isinstance(note, int) for note in interval_pattern]) or not all(1 <= note <= 4 for note in interval_pattern):
+        raise Exception("Interval pattern must be a list of integers from 1 to 4")  
     
-    if not isinstance(starting_note, str) and starting_note in NOTE_INDEXES.items():
-        raise Exception("Starting note must be a string")
+    elif not isinstance(starting_note, str) or not starting_note in SHARP_FLAT_EQUALITY:
+        raise Exception("Starting note must be a valid chaeracter")
     
     return result
 
-def set_starting_index(starting_note: str, current_index: int, output_scale: list) -> int:
+def _set_starting_index(starting_note: str, current_index: int, output_scale: list) -> int:
     if starting_note == 'C':
         output_scale.append('C')
         current_index = 0
@@ -43,7 +45,9 @@ def _move_index(interval_pattern: list[int], current_index: int, output_scale: l
         output_scale.append(NOTE_INDEXES[current_index])
     return output_scale
 
-def rest_code(interval_pattern: list[int], output_scale: list) -> list:
+
+
+def _change_same_letter(interval_pattern: list[int], output_scale: list) -> list:
         """    
         1 = half step, 2 = whole step, 3 = one and a half steps, etc.
         """
@@ -55,11 +59,14 @@ def rest_code(interval_pattern: list[int], output_scale: list) -> list:
                 temp_scale = output_scale[fixed_index:] + output_scale[:fixed_index]
                 break
 
+        # when an output_scale includes D, G or A
         if temp_scale != []:
             for pos in range(len(temp_scale)-1):
                 # when we compare the first and the last note in original output_scale
                 # they should be exactly same note
-                if pos == 7-index and len(temp_scale) == 8:
+
+                # when an interval pattern is non-star
+                if pos != 0 and pos == 7-index and len(temp_scale) == 8:
                     temp_scale[pos+1] = temp_scale[pos]
                 elif temp_scale[pos][0] == temp_scale[pos+1][0] or (temp_scale[pos] == "Cb" and temp_scale[pos+1] == "B#"):
                     for note in SHARP_FLAT_EQUALITY:
@@ -69,10 +76,14 @@ def rest_code(interval_pattern: list[int], output_scale: list) -> list:
                         if duplicate_index == SHARP_FLAT_EQUALITY[note] and  note != temp_scale[pos+1]:
                             temp_scale[pos+1] = note
         # restore a original output_scale from new output_scale
+            # if an interval pattern is non-star
             if len(interval_pattern) == 7:
                 output_scale = temp_scale[8-fixed_index:] + temp_scale[:8-fixed_index]
+            # if an interval pattern is star
             elif len(interval_pattern) == 5:
                 output_scale = temp_scale[6-fixed_index:] + temp_scale[:6-fixed_index]
+
+        # when an output_scale does not D, G or A
         else:
             for pos in range(len(output_scale)-1):
                 if output_scale[pos][0] == output_scale[pos+1][0]  or (output_scale[pos] == "Cb" and output_scale[pos+1] == "B#"):

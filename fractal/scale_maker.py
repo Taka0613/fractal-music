@@ -1,5 +1,5 @@
 from constants import *
-from fractal.maker_utils import set_starting_index, _move_index, rest_code, is_valid_input
+from fractal.maker_utils import _set_starting_index, _move_index,_change_same_letter, is_valid_input
 
 
 def generate_scale(interval_pattern: list[int], starting_note: str) -> list:
@@ -10,9 +10,9 @@ def generate_scale(interval_pattern: list[int], starting_note: str) -> list:
     current_index = 0
     result = []
 
-    current_index = set_starting_index(starting_note, current_index, result) 
+    current_index = _set_starting_index(starting_note, current_index, result) 
     moved_scale = _move_index(interval_pattern, current_index, result) 
-    result = rest_code(interval_pattern, moved_scale)
+    result = _change_same_letter(interval_pattern, moved_scale)
 
     return result
 
