@@ -1,0 +1,15 @@
+[tool.poetry] 
+package-mode = false
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "3.12.3"
+
+[project]
+name = "Scale Maker"
+
+authors = [
+  {name = "Takaya", email = "takaya@uni.minerva.edu"}
+]
+description = "Lovely Fractal!"
+version=1.0
